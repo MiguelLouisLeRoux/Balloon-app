@@ -1,6 +1,5 @@
 export default function FactoryLogic() {
     let colourList = [];
-    let timeLimitVal = 5;
 
     function getColourList(colList){
         colourList = colList;
@@ -43,25 +42,8 @@ export default function FactoryLogic() {
         } 
     }
 
-    function getTimeLimitVal(timeVal) {
-        timeLimitVal = timeVal;
-    }
-
-    function timeLimit() {
-        let trendingList = filtering("trending");
-        if (trendingList.length>0){
-            for (let i = 0; i < trendingList.length; i++) {
-                let itt = trendingList[i];
-                console.log(itt.cssstylecolourvalue);
-            }
-        }
-    }
-
-
     return { cssColourValidation,
              filtering,
-             getTimeLimitVal,
-             timeLimit,
              getColourList
     }   
 }

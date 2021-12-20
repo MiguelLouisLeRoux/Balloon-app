@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/the-other-balloon-widget.csproj": {}
+    "/Users/miguelleroux/Desktop/Projects/Balloon-app/the-other-balloon-widget.csproj": {}
   },
   "projects": {
-    "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/the-other-balloon-widget.csproj": {
+    "/Users/miguelleroux/Desktop/Projects/Balloon-app/the-other-balloon-widget.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/the-other-balloon-widget.csproj",
+        "projectUniqueName": "/Users/miguelleroux/Desktop/Projects/Balloon-app/the-other-balloon-widget.csproj",
         "projectName": "the-other-balloon-widget",
-        "projectPath": "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/the-other-balloon-widget.csproj",
+        "projectPath": "/Users/miguelleroux/Desktop/Projects/Balloon-app/the-other-balloon-widget.csproj",
         "packagesPath": "/Users/miguelleroux/.nuget/packages/",
-        "outputPath": "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/obj/",
+        "outputPath": "/Users/miguelleroux/Desktop/Projects/Balloon-app/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/miguelleroux/.nuget/NuGet/NuGet.Config"

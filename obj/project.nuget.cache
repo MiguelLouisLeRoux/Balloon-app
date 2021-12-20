@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b257v6m0GBNCKP9c1xmHi8tDUJGWrSCFrf+1htWyKnw5Erc1abPiNpJxonBMvkmUmp0DpB+yxKKwgQcWm90KTA==",
+  "dgSpecHash": "A+6TmaNMOv1Z4HEegPbB1cSataNhtUVgq8EQC8iGrRzQrZjfkcab3SKm2E3Uv4JS+gxD/DeRvti+K3DeIZCSUw==",
   "success": true,
-  "projectFilePath": "/Users/miguelleroux/Desktop/Projects/the-other-balloon-widget/the-other-balloon-widget.csproj",
+  "projectFilePath": "/Users/miguelleroux/Desktop/Projects/Balloon-app/the-other-balloon-widget.csproj",
   "expectedPackageFiles": [
     "/Users/miguelleroux/.nuget/packages/dapper/1.50.2/dapper.1.50.2.nupkg.sha512",
     "/Users/miguelleroux/.nuget/packages/microsoft.aspnetcore.spaservices.extensions/5.0.9/microsoft.aspnetcore.spaservices.extensions.5.0.9.nupkg.sha512",
