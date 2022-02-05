@@ -4,10 +4,13 @@ export default function FactoryLogic() {
     function getColourList(colList){
         colourList = colList;
     }
+    
+    function returnColList(){
+        return colourList;
+    }
 
     function cssColourValidation(colVal){
         let trim = colVal.trim();
-
         let removeWhiteSpaceBetween = trim.replace(/\s+/g, '');
         let lowerCase = removeWhiteSpaceBetween.toLowerCase(); 
         let validCSSColour = new Option().style;
@@ -44,6 +47,7 @@ export default function FactoryLogic() {
 
     return { cssColourValidation,
              filtering,
-             getColourList
+             getColourList,
+             returnColList
     }   
 }

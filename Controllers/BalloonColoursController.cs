@@ -10,7 +10,7 @@ using Npgsql;
 namespace the_other_balloon_widget.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]")] 
     public class BalloonColoursController : ControllerBase
     {
         private readonly IConfiguration _configuration;

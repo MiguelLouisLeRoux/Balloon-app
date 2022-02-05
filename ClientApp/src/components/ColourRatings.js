@@ -13,6 +13,11 @@ export default function ColourRatings(props){
         update({cssVal: cssVal, colVal: colVal, reqVal: reqVal});
     }
 
+    const submitUpdate = (event) => {
+        event.preventDefault();
+        props.modalHandle(updateCol.cssVal, requestVal)
+    }
+
     return(
         <>
             <div className="mt-5">
@@ -28,7 +33,7 @@ export default function ColourRatings(props){
                         </thead>
                         <tbody>
                         {props.colours.map(colourElem =>
-                            <tr> 
+                            <tr key={colourElem.cssStyleColourValue}> 
                                 <td><IoBalloon color={colourElem.cssStyleColourValue}/>{colourElem.colour}</td>
                                 <td>{colourElem.requests}</td>
                                 <td><Button className="btn btn-danger btn-sm" type="button" value={colourElem.cssStyleColourValue} onClick={()=>props.myFunction(colourElem.cssStyleColourValue)}>Remove</Button> 
@@ -44,14 +49,14 @@ export default function ColourRatings(props){
                 <Modal.Header>
                     <Modal.Title><IoBalloon color={updateCol.cssVal}/>{updateCol.colVal} currently has {updateCol.reqVal} requests.</Modal.Title>
                 </Modal.Header>
-                <Form>
+                <Form onSubmit={submitUpdate}>
                     <Form.Group>
                         <Modal.Body>Set new amount of requests: <Form.Control type="number" min="1" value={requestVal} onChange={event => reqUpdate(event.target.value)} required></Form.Control></Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={()=>modalShow(false)}>
                                 Close
                             </Button>
-                            <Button variant="primary" type="button" onClick={()=>props.modalHandle(updateCol.cssVal, requestVal)}>
+                            <Button variant="primary" type="submit" >
                                 Save Changes
                             </Button>
                         </Modal.Footer>

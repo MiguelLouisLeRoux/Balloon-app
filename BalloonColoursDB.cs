@@ -13,7 +13,7 @@ namespace the_other_balloon_widget
 {
     public class BalloonColoursDB
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration; 
 
         public BalloonColoursDB (IConfiguration configuration)
         {
@@ -29,7 +29,7 @@ namespace the_other_balloon_widget
             List<BalloonColoursModel> coloursList = new List<BalloonColoursModel>();
             coloursList = con.Query<BalloonColoursModel>(sql).AsList();
             con.Close();
-            return coloursList.ToArray(); 
+            return coloursList.ToArray();
         }
 
         public void RequestColour(string col) 
