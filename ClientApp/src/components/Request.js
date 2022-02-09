@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import ColourRatings from './ColourRatings';
 import TimelimitModal  from "./TimelimitModal";
@@ -8,14 +8,15 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import FactoryLogic from './Logic';
 const factory = FactoryLogic();
 
-export default function Request (props){
-    const [timeLimit, setTimeLimit] = useState(5);
-    const [colourslist, setColourList] = useState([]);
-    const [connection, setConnection] = useState(null);
+export default Request = () => {
+    const [ timeLimit, setTimeLimit ] = useState(5);
+    const [ colourslist, setColourList ] = useState([]);
+    const [ connection, setConnection ] = useState(null);
 
     const populateBalloonColours = async ()=> {
         const colourdata = (await axios.get('/ballooncolours')).data;
         setColourList(colourdata);
+        console.log(colourslist);
         factory.getColourList(colourdata);
         const timedata = (await axios.get('/ballooncolours/' + timeLimit)).data;
         setTimeLimit(timedata);
@@ -23,7 +24,7 @@ export default function Request (props){
 
     useEffect(()=>{
         populateBalloonColours();
-       
+      
         const newConnection = new HubConnectionBuilder()
             .withUrl('https://localhost:5001/BalloonHub')
             .withAutomaticReconnect()
@@ -38,17 +39,32 @@ export default function Request (props){
                 .then(result => {
                     console.log('Connected!');
     
-                    connection.on('GetBalloons', list => {
-                      
+                    connection.on('GetBalloons', () => {
+                        populateBalloonColours();
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     },[connection]);
 
-    const handleSubmit = (colVal) => {
+    const handleSubmit = async (colVal) => {
+        
         if (factory.cssColourValidation(colVal) !== false) {
+            factory.addingColour(colVal);
             axios.post("/ballooncolours/" + colVal, colVal);
+
+            try {
+                await  fetch('https://localhost:5001/BalloonHub', { 
+                    method: 'POST', 
+                    body: JSON.stringify(factory.returnColList()),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
+            catch(e) {
+                console.log('Sending message failed.', e);
+            }
         }
     }
 
