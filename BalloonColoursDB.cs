@@ -15,7 +15,7 @@ namespace the_other_balloon_widget
     {
         private readonly IConfiguration _configuration; 
 
-        public BalloonColoursDB (IConfiguration configuration)
+        public BalloonColoursDB (IConfiguration configuration) 
         {
             _configuration = configuration;
         }

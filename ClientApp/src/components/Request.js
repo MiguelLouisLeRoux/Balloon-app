@@ -4,30 +4,47 @@ import ColourRatings from './ColourRatings';
 import TimelimitModal  from "./TimelimitModal";
 import TheForm from "./Form";
 import axios from 'axios';
+import { HubConnectionBuilder } from '@microsoft/signalr';
 import FactoryLogic from './Logic';
 const factory = FactoryLogic();
 
 export default function Request (props){
     const [timeLimit, setTimeLimit] = useState(5);
     const [colourslist, setColourList] = useState([]);
+    const [connection, setConnection] = useState(null);
 
     const populateBalloonColours = async ()=> {
         const colourdata = (await axios.get('/ballooncolours')).data;
-        console.log(colourdata);
         setColourList(colourdata);
         factory.getColourList(colourdata);
-        console.log(colourslist);
         const timedata = (await axios.get('/ballooncolours/' + timeLimit)).data;
         setTimeLimit(timedata);
     };
 
     useEffect(()=>{
         populateBalloonColours();
+       
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('https://localhost:5001/BalloonHub')
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
     },[]);
 
     useEffect(()=>{
-        populateBalloonColours();
-    },[]);
+        if (connection) {
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
+    
+                    connection.on('GetBalloons', list => {
+                      
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    },[connection]);
 
     const handleSubmit = (colVal) => {
         if (factory.cssColourValidation(colVal) !== false) {

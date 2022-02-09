@@ -6,12 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using the_other_balloon_widget.Hubs;
 
 namespace the_other_balloon_widget
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration) 
         {
             Configuration = configuration;
         }
@@ -23,12 +24,15 @@ namespace the_other_balloon_widget
         {
 
             services.AddControllersWithViews();
+            services.AddSignalR();
+
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +60,7 @@ namespace the_other_balloon_widget
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                    // pattern: "{controller}");
+                    endpoints.MapHub<BalloonHub>("/BalloonHub");
             });
 
             app.UseSpa(spa =>
