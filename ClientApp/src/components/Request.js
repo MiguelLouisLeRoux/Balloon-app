@@ -4,20 +4,20 @@ import ColourRatings from './ColourRatings';
 import TimelimitModal  from "./TimelimitModal";
 import TheForm from "./Form";
 import axios from 'axios';
-import { HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import FactoryLogic from './Logic';
 const factory = FactoryLogic();
 
 export default Request = () => {
-    const [ timeLimit, setTimeLimit ] = useState(5);
+    const [ timeLimit, setTimeLimit ] = useState(0);
     const [ colourslist, setColourList ] = useState([]);
     const [ connection, setConnection ] = useState(null);
+    const [ content, setContent ] = useState();
 
+    //Get functions
     const populateBalloonColours = async ()=> {
         const colourdata = (await axios.get('/ballooncolours')).data;
         setColourList(colourdata);
-        console.log(colourslist);
-        factory.getColourList(colourdata);
         const timedata = (await axios.get('/ballooncolours/' + timeLimit)).data;
         setTimeLimit(timedata);
     };
@@ -27,6 +27,7 @@ export default Request = () => {
       
         const newConnection = new HubConnectionBuilder()
             .withUrl('https://localhost:5001/BalloonHub')
+            .configureLogging(LogLevel.Information)
             .withAutomaticReconnect()
             .build();
 
@@ -36,35 +37,34 @@ export default Request = () => {
     useEffect(()=>{
         if (connection) {
             connection.start()
-                .then(result => {
-                    console.log('Connected!');
-    
-                    connection.on('GetBalloons', () => {
-                        populateBalloonColours();
-                    });
-                })
-                .catch(e => console.log('Connection failed: ', e));
+            .then(() => {
+                console.log('Connected!');
+
+                connection.on('GetBalloons', data => {
+                    console.log(data);
+                    setColourList(data);
+                  
+                });
+            })
+            .catch(e => console.log('Connection failed: ', e));
         }
     },[connection]);
 
+    useEffect(()=>{  
+        if (timeLimit !== 0 && colourslist !== []) {
+            factory.getColourList(colourslist);
+            setContent(loadingContent());
+        } else {
+            setContent(stillLoading());
+        }
+    }, [timeLimit, colourslist])
+
+
+    //Action functions (post, put, delete)
     const handleSubmit = async (colVal) => {
         
         if (factory.cssColourValidation(colVal) !== false) {
-            factory.addingColour(colVal);
             axios.post("/ballooncolours/" + colVal, colVal);
-
-            try {
-                await  fetch('https://localhost:5001/BalloonHub', { 
-                    method: 'POST', 
-                    body: JSON.stringify(factory.returnColList()),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-            }
-            catch(e) {
-                console.log('Sending message failed.', e);
-            }
         }
     }
 
@@ -81,8 +81,11 @@ export default Request = () => {
         axios.put("/ballooncolours/" + cssVal + "/" + reqVal, cssVal, reqVal);
     }
 
-    return (
-        <div>
+
+    //Displayed Content functions
+    const loadingContent = () => {
+        return (
+            <div>
             <div className="container pl-5 pr-5 mt-2 d-flex justify-content-start">
                 <TimelimitModal theTimeLimit={timeLimit} timeLimitFunction={timeLimitModal}/>
             </div>
@@ -106,5 +109,20 @@ export default Request = () => {
             </div>
             <br/>
         </div>
+        );
+    }
+
+    const stillLoading = ()=>{
+        return (
+            <div className="alert alert-info mt-5 mb-5 ml-5 mr-5">
+                <h1 className="text-primary display-4 text-center">Loading...</h1>
+            </div>
+        )
+    }
+
+    return (
+        <>
+            {content}
+        </>
     )
 }

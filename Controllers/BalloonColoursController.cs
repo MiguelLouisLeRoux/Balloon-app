@@ -52,7 +52,7 @@ namespace the_other_balloon_widget.Controllers
 
             BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
 
-            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList);
+            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList.GettingBalloonColours());
         }
 
         [HttpPut]
@@ -65,7 +65,7 @@ namespace the_other_balloon_widget.Controllers
 
             BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
 
-            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList);
+            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList.GettingBalloonColours());
         }
 
         [HttpPut]
@@ -77,7 +77,7 @@ namespace the_other_balloon_widget.Controllers
 
             BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
 
-            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList);
+            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList.GettingBalloonColours());
         }
 
         [HttpDelete]
@@ -89,7 +89,7 @@ namespace the_other_balloon_widget.Controllers
 
             BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
 
-            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList);
+            await _balloonHub.Clients.All.SendAsync("GetBalloons", getColourList.GettingBalloonColours());
         }
     }
 }

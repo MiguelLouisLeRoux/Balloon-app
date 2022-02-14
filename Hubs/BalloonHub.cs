@@ -8,10 +8,17 @@ namespace the_other_balloon_widget.Hubs
 {
     public class BalloonHub : Hub
     {
-        // public async Task GetBalloons(IEnumerable<BalloonColoursModel> balloonList)
-        // {
-
-        //     await Clients.All.SendAsync("GetBalloons", balloonList);
-        // }
+        private readonly IConfiguration _configuration;
+        public BalloonHub (IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public async Task GetBalloons(IEnumerable<BalloonColoursModel> balloonList)
+        {
+            BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
+            balloonList = getColourList.GettingBalloonColours();
+            
+            await Clients.All.SendAsync("GetBalloons", balloonList);
+        }
     }
 }
