@@ -15,7 +15,8 @@ export default function ColourRatings(props){
 
     const submitUpdate = (event) => {
         event.preventDefault();
-        props.modalHandle(updateCol.cssVal, requestVal)
+        props.modalHandle(updateCol.cssVal, requestVal);
+        updateCol.reqVal = requestVal;
     }
 
     return(

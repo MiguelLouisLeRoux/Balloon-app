@@ -22,7 +22,7 @@ namespace the_other_balloon_widget
 
         public IEnumerable<BalloonColoursModel> GettingBalloonColours()
         {
-            string connectionstring = _configuration.GetConnectionString("PSQLConnection");
+            string connectionstring = _configuration.GetConnectionString("PSQLConnection"); 
             using NpgsqlConnection con = new NpgsqlConnection(connectionstring);
             con.Open();
             string sql = "SELECT * FROM ballooncolours;";

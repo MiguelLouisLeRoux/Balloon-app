@@ -26,7 +26,7 @@ export default Request = () => {
         populateBalloonColours();
       
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:5001/BalloonHub')
+            .withUrl('/BalloonHub')
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect()
             .build();
@@ -40,9 +40,10 @@ export default Request = () => {
             .then(() => {
                 console.log('Connected!');
 
-                connection.on('GetBalloons', data => {
+                connection.on('GetBalloons', (data, time) => {
                     console.log(data);
                     setColourList(data);
+                    setTimeLimit(time);
                   
                 });
             })

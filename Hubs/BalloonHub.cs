@@ -13,12 +13,13 @@ namespace the_other_balloon_widget.Hubs
         {
             _configuration = configuration;
         }
-        public async Task GetBalloons(IEnumerable<BalloonColoursModel> balloonList)
+        public async Task GetBalloons(IEnumerable<BalloonColoursModel> balloonList, int timelimit)
         {
             BalloonColoursDB getColourList = new BalloonColoursDB(_configuration);
             balloonList = getColourList.GettingBalloonColours();
+            timelimit = getColourList.GetTimelimit();
             
-            await Clients.All.SendAsync("GetBalloons", balloonList);
+            await Clients.All.SendAsync("GetBalloons", balloonList, timelimit);
         }
     }
 }
